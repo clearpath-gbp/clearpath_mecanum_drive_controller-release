@@ -107,7 +107,9 @@ controller_interface::CallbackReturn MecanumDriveController::on_configure(
       params_.command_joint_names.size(), state_joint_names_.size());
     return CallbackReturn::FAILURE;
   }
-
+  
+  odometry_.init(
+    get_node()->now(), {params_.kinematics.base_frame_offset.x, params_.kinematics.base_frame_offset.y, params_.kinematics.base_frame_offset.theta});
   // Set wheel params for the odometry computation
   odometry_.setWheelsParams(
     params_.kinematics.sum_of_robot_center_projection_on_X_Y_axis,
